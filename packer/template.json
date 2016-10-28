@@ -1,0 +1,25 @@
+{
+	"builders": [
+	{
+		"type": "virtualbox-iso",
+		"boot_command": ["<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"],
+		"boot_wait": "10s",
+		"vboxmanage": [
+			[ "modifyvm", "{{.Name}}", "--memory", "512" ],
+			[ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+		],
+		"disk_size": 20480,
+		"guest_os_type": "RedHat_64",
+		"iso_url": "/home/sfrancisco/Files/CentOS-7-x86_64-DVD-1511.iso",
+		"iso_checksum_type": "md5",
+		"iso_checksum": "c875b0f1dabda14f00a3e261d241f63e",
+		"ssh_username": "sfrancisco",
+		"ssh_password": "sfrancisco",
+		"ssh_port": 22,
+		"shutdown_command": "echo 'sfrancisco' | sudo -S systemctl poweroff",
+		"shutdown_timeout": "3m",
+		"virtualbox_version_file": ".vbox_version",
+		"vm_name": "packer-centos7_1c512m-BUILDNAME"
+	}
+	]
+}
