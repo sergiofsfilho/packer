@@ -1,2 +1,2 @@
-/output-virtualbox/
-/packer_cache/
+output-*
+packer_cache/

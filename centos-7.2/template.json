@@ -1,7 +1,10 @@
 {
+	"_comment": "CentOS 7.2 Vagrant box by sergiofsfilho",
 	"builders": [
 	{
+		"vm_name": "centos-7.2-1vcpu-1gb",
 		"type": "virtualbox-iso",
+		"http_directory": "http",
 		"boot_command": ["<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"],
 		"boot_wait": "10s",
 		"vboxmanage": [
@@ -10,16 +13,16 @@
 		],
 		"disk_size": 20480,
 		"guest_os_type": "RedHat_64",
-		"iso_url": "centos-7.2-x86_64-minimal.iso",
+		"iso_url": "/home/sfrancisco/Files/centos-7.2-x86_64-minimal.iso",
 		"iso_checksum_type": "sha256",
 		"iso_checksum": "f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284",
-		"ssh_username": "sfrancisco",
-		"ssh_password": "sfrancisco",
+		"ssh_username": "vagrant",
+		"ssh_password": "vagrant",
+		"ssh_wait_timeout": "10000s",
 		"ssh_port": 22,
-		"shutdown_command": "echo 'sfrancisco' | sudo -S systemctl poweroff",
+		"shutdown_command": "echo 'vagrant' | sudo -S systemctl poweroff",
 		"shutdown_timeout": "3m",
-		"virtualbox_version_file": ".vbox_version",
-		"vm_name": "centos-7.2-1vcpu-1gb"
+		"virtualbox_version_file": ".vbox_version"
 	}
 	]
 }
