@@ -1,8 +1,10 @@
-# Sergio's DevOps Toolbox
-All the tooling needed to automate everything related to IT Infrastructure.
-Under construction.
+# My Packer templates
+This is the repository where I store the code that I use to generate some virtual machine templates/images
 
-Good examples
+## Templates
+[]()[]()[CentOS 7.2](https://github.com/sergiofsfilho/packer/tree/master/centos-7.2)
+
+## References
 https://github.com/TFDuesing/packer-templates
 https://github.com/boxcutter
 https://github.com/hnakamur/my-packer-template-files
