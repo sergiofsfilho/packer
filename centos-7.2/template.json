@@ -20,6 +20,7 @@
 	{
 		"type": "virtualbox-iso",
 		"vm_name": "{{ user `vm_name` }}",
+		"headless": "true",
 		"http_directory": "http",
 		"boot_command": ["<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{  user `ks_file` }}<enter><wait>"],
 		"boot_wait": "5s",
