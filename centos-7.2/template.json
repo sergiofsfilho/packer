@@ -1,28 +1,73 @@
 {
-	"_comment": "CentOS 7.2 Vagrant box by sergiofsfilho",
+	"variables": {
+		"vm_name": "centos-7.2-1-vcpu-512m-mem",
+		"vm_description": "Here goes VM description.",
+		"vm_version": "0.0.1",
+		"cpus": "1",
+		"memory": "512",
+		"disk_size": "20480",
+ 		"iso_checksum_type": "sha256",
+		"iso_url": "/home/sfrancisco/Files/centos-7.2-x86_64-minimal.iso",
+		"iso_checksum": "f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284",
+		"ssh_username": "root",
+		"ssh_password": "rootroot",
+		"ssh_port": "22",
+		"ks_file": "ks.cfg",
+		"shutdown_command": "echo 'vagrant' | sudo -S systemctl poweroff"
+	},
+
 	"builders": [
 	{
-		"vm_name": "centos-7.2-1vcpu-1gb",
 		"type": "virtualbox-iso",
+		"vm_name": "{{ user `vm_name` }}",
 		"http_directory": "http",
-		"boot_command": ["<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"],
-		"boot_wait": "10s",
+		"boot_command": ["<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{  user `ks_file` }}<enter><wait>"],
+		"boot_wait": "5s",
 		"vboxmanage": [
-			[ "modifyvm", "{{.Name}}", "--memory", "1024" ],
-			[ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+			[ "modifyvm", "{{.Name}}", "--memory", "{{  user `memory` }}" ],
+			[ "modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus`  }}" ]
 		],
-		"disk_size": 20480,
+		"disk_size": "{{ user `disk_size` }}",
+		"hard_drive_interface": "sata",
 		"guest_os_type": "RedHat_64",
-		"iso_url": "/home/sfrancisco/Files/centos-7.2-x86_64-minimal.iso",
-		"iso_checksum_type": "sha256",
-		"iso_checksum": "f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284",
-		"ssh_username": "vagrant",
-		"ssh_password": "vagrant",
+		"iso_url": "{{ user `iso_url` }}",
+		"iso_checksum_type": "{{ user `iso_checksum_type` }}",
+		"iso_checksum": "{{ user `iso_checksum` }}",
+		"ssh_username": "{{ user `ssh_username` }}",
+		"ssh_password": "{{ user `ssh_password` }}",
 		"ssh_wait_timeout": "10000s",
-		"ssh_port": 22,
-		"shutdown_command": "echo 'vagrant' | sudo -S systemctl poweroff",
+		"ssh_port": "{{ user `ssh_port` }}",
+		"guest_additions_path": "vbox-guest-additions.iso",
+		"output_directory": "output-{{ user `vm_name` }}-virtualbox",
+		"shutdown_command": "{{ user `shutdown_command` }}",
 		"shutdown_timeout": "3m",
-		"virtualbox_version_file": ".vbox_version"
+		"virtualbox_version_file": ".vbox_version",
+		"export_opts": [
+			"--description", "{{ user `vm_description` }}",
+			"--version", "{{ user `vm_version` }}"
+		]
+	}
+	],
+	
+	"provisioners": [
+		{
+			"scripts": [ "scripts/vagrant.sh" ],
+			"type": "shell"
+		},
+		{
+			"only": [ "virtualbox-iso" ],
+			"scripts": [ "scripts/virtualbox.sh" ],
+			"type": "shell"
+		}
+	],
+
+	"post-processors": [
+	{
+		"type": "vagrant",
+		"keep_input_artifact": false,
+		"output": "vagrant-box/{{.Provider}}/{{user `vm_name`}}-{{.Provider}}.box",
+		"type": "vagrant",
+		"vagrantfile_template": "{{ user `vagrantfile_template` }}"
 	}
 	]
 }
