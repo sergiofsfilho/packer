@@ -69,8 +69,6 @@
 		"type": "vagrant",
 		"keep_input_artifact": false,
 		"output": "vagrant-box/{{.Provider}}/{{user `vm_name`}}-{{.Provider}}.box",
-		"type": "vagrant",
-		"vagrantfile_template": "{{ user `vagrantfile_template` }}"
 	}
 	]
 }
