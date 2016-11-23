@@ -1,7 +1,7 @@
 {
 	"variables": {
 		"vm_name": "centos-7.2-1-vcpu-512m-mem",
-		"vm_description": "Here goes VM description.",
+		"vm_description": "CentOS 7.2 template basico",
 		"vm_version": "0.0.1",
 		"cpus": "1",
 		"memory": "512",
@@ -13,7 +13,7 @@
 		"ssh_password": "rootroot",
 		"ssh_port": "22",
 		"ks_file": "ks.cfg",
-		"shutdown_command": "echo 'vagrant' | sudo -S systemctl poweroff"
+		"shutdown_command": "systemctl poweroff"
 	},
 
 	"builders": [
@@ -44,6 +44,8 @@
 		"shutdown_timeout": "3m",
 		"virtualbox_version_file": ".vbox_version",
 		"export_opts": [
+			"--manifest",
+			"--vsys", "0",
 			"--description", "{{ user `vm_description` }}",
 			"--version", "{{ user `vm_version` }}"
 		]
