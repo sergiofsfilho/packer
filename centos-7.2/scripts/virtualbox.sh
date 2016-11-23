@@ -8,7 +8,7 @@
 # - https://github.com/TFDuesing/packer-templates/blob/master/Fedora-23/scripts/10virtualbox.sh
 
 if [ $PACKER_BUILDER_TYPE = "virtualbox-iso" ]; then
-	yum install -y bzip2 dkms kernel-devel
+	#yum install -y bzip2 dkms kernel-devel gcc
 	echo "==> Installing VirtualBox Guest Additions through script"
 	mount -o loop /root/vbox-guest-additions.iso /mnt
 	sh /mnt/VBoxLinuxAdditions.run --nox11
